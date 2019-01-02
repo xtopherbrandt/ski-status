@@ -2,12 +2,9 @@
   "name": "ski-status-webhook",
   "description": "A webhook for ski-status",
   "version": "0.0.1",
-  "private": true,
+  "main": "index.js",
   "license": "Apache Version 2.0",
   "author": "xtopher.brandt@gmail.com",
-  "engines": {
-    "node": "8"
-  },
   "dependencies": {
     "actions-on-google": "^2.2.0",
     "dialogflow": "^0.6.0",
