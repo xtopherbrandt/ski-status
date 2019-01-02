@@ -3,10 +3,72 @@
 const {dialogflow} = require('actions-on-google');
 const Scraper = require( './whistlerpeak-scraper.js' );
 
-module.exports = async function (context, req) {
-    context.log('ski-status webhook fired');
-    context.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
-    context.log('Dialogflow Request body: ' + JSON.stringify(req.body));
+function completeCall( azureContext, responseBody ){
+    azureContext.log( `completeCall - responseBody: ${responseBody}`);
+
+    azureContext.res = {
+        body: responseBody
+    };
+
+    azureContext.done();     
+}
+
+function checkGrooming(conv) {
+    
+    var scraper = new Scraper( console );
+
+    var groomingPromise = scraper.statusQuery( conv.parameters.runName );
+
+    var checkGroomingPromise = new Promise( ( resolve, reject ) => {
+        groomingPromise.then( (grooming) => {
+            console.log( `input RunName: ${conv.parameters.runName}`);
+            console.log( `output Grooming: ${grooming.groomedRuns}`);
+            console.log(`Number of groomed runs: ${grooming.groomedRuns.length}`);
+            
+            switch (grooming.groomedRuns.length) {
+                case 0 :{
+                    conv.add(`No ${conv.parameters.runName} is not groomed today.`);
+                    console.log('NO');
+                    break;
+                }
+                case 1 : {
+                    conv.add( `Yes, ${conv.parameters.runName} is groomed today.`);
+                    console.log('YES');
+                    break;
+                }
+                default : {
+                    conv.add(`This message is from Dialogflow's Cloud Functions for Firebase editor!`);
+                }
+            }
+
+            resolve();
+        });
+    });
+
+
+    
+/**        
+        agent.add(new Card({
+            title: `Title: this is a card title`,
+            imageUrl: 'https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png',
+            text: `This is the body text of a card.  You can even use line\n  breaks and emoji! 💁`,
+            buttonText: 'This is a button',
+            buttonUrl: 'https://assistant.google.com/'
+        })
+        );
+        agent.add(new Suggestion(`Quick Reply`));
+        agent.add(new Suggestion(`Suggestion`));
+        agent.setContext({ name: 'weather', lifespan: 2, parameters: { city: 'Rome' }});
+    });
+*/
+    //conv.contexts = { name: 'grooming', lifespan: 2, parameters: { runName: `${conv.parameters.runName}` }};
+    return checkGroomingPromise;
+}
+
+module.exports = async function (azureContext, req) {
+    azureContext.log('ski-status webhook fired');
+    azureContext.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
+    azureContext.log('Dialogflow Request body: ' + JSON.stringify(req.body));
     
     const app = dialogflow({debug: true} );
 
@@ -34,52 +96,9 @@ module.exports = async function (context, req) {
         return checkGrooming(conv);
     })
 
-    function checkGrooming(conv) {
     
-        var scraper = new Scraper( console );
+    return app( req.body, req.headers );
 
-        var groomingPromise = scraper.statusQuery( conv.parameters.runName );
-    
-        groomingPromise.then( (grooming) => {
-            console.log( `input RunName: ${conv.parameters.runName}`);
-            console.log( `output Grooming: ${grooming.groomedRuns}`);
-            console.log(`Number of groomed runs: ${grooming.groomedRuns.length}`);
-            
-            switch (grooming.groomedRuns.length) {
-                case 0 :{
-                    conv.add(`No ${conv.parameters.runName} is not groomed today.`);
-                    console.log('NO');
-
-                }
-                case 1 : {
-                    conv.add( `Yes, ${conv.parameters.runName} is groomed today.`);
-                    console.log('YES');
-                }
-                default : {
-                    conv.add(`This message is from Dialogflow's Cloud Functions for Firebase editor!`);
-                }
-            }
-        });
-    
-        
-    /**        
-            agent.add(new Card({
-                title: `Title: this is a card title`,
-                imageUrl: 'https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png',
-                text: `This is the body text of a card.  You can even use line\n  breaks and emoji! 💁`,
-                buttonText: 'This is a button',
-                buttonUrl: 'https://assistant.google.com/'
-            })
-            );
-            agent.add(new Suggestion(`Quick Reply`));
-            agent.add(new Suggestion(`Suggestion`));
-            agent.setContext({ name: 'weather', lifespan: 2, parameters: { city: 'Rome' }});
-        });
-    */
-        //conv.contexts = { name: 'grooming', lifespan: 2, parameters: { runName: `${conv.parameters.runName}` }};
-        return groomingPromise;
-    }
-    
-    app( req.body, req.headers );
+    //responsePromise.then( response => { completeCall( azureContext, response.body )} );
 
 };

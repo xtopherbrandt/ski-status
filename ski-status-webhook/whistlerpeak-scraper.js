@@ -7,7 +7,7 @@ const { JSDOM } = jsdom;
 
 module.exports = class WhistlerPeakScraper {
     constructor ( console ){
-        this.url = 'http://www.whistlerpeak.com/block-grooming.php';
+        this.url = 'http://whistlerpeak.com/block-grooming.php';
         this.console = console;
     }
     
@@ -32,7 +32,6 @@ module.exports = class WhistlerPeakScraper {
 
             grooming.groomedRuns = this.getRunGroomingStatus( $, runName );
             //grooming.lastUpdated = this.getGroomingLastUpdatedTime( $ );
-            this.console.log( grooming );
             this.resolve( grooming );
         }
         catch( e ){
