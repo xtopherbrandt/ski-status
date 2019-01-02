@@ -63,7 +63,7 @@ function checkGrooming(conv) {
         agent.setContext({ name: 'weather', lifespan: 2, parameters: { city: 'Rome' }});
     });
 */
-    conv.setContext ( { name: 'grooming', lifespan: 2, parameters: { runName: `${conv.parameters.runName}` }});
+    //conv.setContext ( { name: 'grooming', lifespan: 2, parameters: { runName: `${conv.parameters.runName}` }});
     return checkGroomingPromise;
 }
  
@@ -125,6 +125,9 @@ module.exports = function (azureContext, req) {
     intentMap.set('Default Fallback Intent', fallback);
     // intentMap.set('your intent name here', yourFunctionHandler);
     intentMap.set('is this run groomed', checkGrooming);
-    agent.handleRequest(intentMap).then( () => { azureContext.done; });
+    agent.handleRequest(intentMap).then( () => { 
+        azureContext.log( azureContext.res ); 
+        azureContext.done(); 
+    });
 
 };
