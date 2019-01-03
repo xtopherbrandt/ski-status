@@ -9,7 +9,8 @@ function completeCall( azureContext, responseBody ){
     azureContext.log( `completeCall - responseBody: ${responseBody}`);
 
     azureContext.res = {
-        body: responseBody
+        body: responseBody,
+        headers: {"transfer-encoding" : "application/gzip"}
     };
 
     azureContext.done();     
@@ -111,11 +112,34 @@ module.exports = function (azureContext, req) {
         return checkGrooming(conv);
     })
 
-    
     app( req.body, req.headers ).then( response => {
         azureContext.log( `Response: ${response}` );
-        azureContext.res = response;
+        azureContext.res = {
+            body: response.body,
+            headers: {'Content-Type':'application/json', 'transfer-encoding' : 'application/gzip'},
+            status: 200
+        }
+        
         azureContext.done();
     });
+/**
+    var responseBody = {
+        "payload": {
+          "google": {
+            "expectUserResponse": true,
+            "richResponse": {
+              "items": [
+                {
+                  "simpleResponse": {
+                    "textToSpeech": "this is a simple response"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      };
 
+    completeCall( azureContext, responseBody );
+*/
 };
