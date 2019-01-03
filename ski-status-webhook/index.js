@@ -117,10 +117,10 @@ module.exports = function (azureContext, req) {
     });
 
     app( req.body, req.headers ).then( response => {
-        azureContext.log( `Response: ${response.body}` );
+        azureContext.log( `Response: ${JSON.stringify(response.body)}` );
         azureContext.res = {
             body: response.body,
-            headers: {'Content-Type':'application/json', 'transfer-encoding' : 'application/gzip'},
+            headers: {'Content-Type':'application/json', 'Transfer-Encoding' : 'application/identity'},
             status: 200
         };
         
