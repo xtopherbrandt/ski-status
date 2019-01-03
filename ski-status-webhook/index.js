@@ -1,7 +1,7 @@
 'use strict';
 
-//const {dialogflow} = require('actions-on-google');
-const {WebhookClient} = require('dialogflow-fulfillment');
+const {dialogflow} = require('actions-on-google');
+//const {WebhookClient} = require('dialogflow-fulfillment');
 const {Card, Suggestion} = require('dialogflow-fulfillment');
 const Scraper = require( './whistlerpeak-scraper.js' );
 
@@ -76,27 +76,26 @@ function fallback(agent) {
     agent.add(`I'm sorry, can you try again?`);
 }
 
-module.exports = function (azureContext, req) {
+module.exports = async function (azureContext, req) {
     azureContext.log('ski-status webhook fired');
     azureContext.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
     azureContext.log('Dialogflow Request body: ' + JSON.stringify(req.body));
     
-    //const app = dialogflow({debug: true} );
- 
-    const agent = new WebhookClient({ request: req, response: azureContext.res });
+    const app = dialogflow({debug: true} );
 
-/**
+
     // Register handlers for Dialogflow intents
 
     app.intent('Default Welcome Intent', conv => {
         conv.ask('Hi, how is it going?')
 
+        /**
         conv.ask(`Here's a picture of a cat`)
         conv.ask(new Image({
         url: 'https://developers.google.com/web/fundamentals/accessibility/semantics-builtin/imgs/160204193356-01-cat-500.jpg',
         alt: 'A cat',
         }))
-
+        */
     })
     
     // Intent in Dialogflow called `Goodbye`
@@ -114,20 +113,5 @@ module.exports = function (azureContext, req) {
 
     
     return app( req.body, req.headers );
-*/
-
-    // See https://github.com/dialogflow/dialogflow-fulfillment-nodejs/tree/master/samples/actions-on-google
-    // for a complete Dialogflow fulfillment library Actions on Google client library v2 integration sample
-
-    // Run the proper function handler based on the matched Dialogflow intent name
-    let intentMap = new Map();
-    intentMap.set('Default Welcome Intent', welcome);
-    intentMap.set('Default Fallback Intent', fallback);
-    // intentMap.set('your intent name here', yourFunctionHandler);
-    intentMap.set('is this run groomed', checkGrooming);
-    agent.handleRequest(intentMap).then( () => { 
-        azureContext.log( azureContext.res ); 
-        azureContext.done(); 
-    });
 
 };

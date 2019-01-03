@@ -1,0 +1,37 @@
+{
+    "conversationToken": "[]",
+    "expectUserResponse": true,
+    "expectedInputs": [{
+        "inputPrompt": {
+            "richInitialPrompt": {
+                "items": [{
+                    "simpleResponse": {
+                        "textToSpeech": "Welcome to my agent!"
+                    }
+                }]
+            }
+        },
+        "possibleIntents": [{
+            "intent": "assistant.intent.action.TEXT"
+        }]
+    }],
+    "responseMetadata": {
+        "status": {
+            "message": "Success (200)"
+        },
+        "queryMatchInfo": {
+            "queryMatched": true,
+            "intent": "b96291d1-9c93-4699-a7e4-bb38134da220"
+        },
+        "delegatedRequest": {
+            "delegatedRequest": "{\n  \"responseId\": \"bda6f687-15cc-48e4-8f09-96f6de5fc0b6\",\n  \"queryResult\": {\n    \"queryText\": \"GOOGLE_ASSISTANT_WELCOME\",\n    \"action\": \"input.welcome\",\n    \"parameters\": {\n    },\n    \"allRequiredParamsPresent\": true,\n    \"fulfillmentText\": \"Greetings! How can I assist?\",\n    \"fulfillmentMessages\": [{\n      \"text\": {\n        \"text\": [\"Hello! How can I help you?\"]\n      }\n    }],\n    \"outputContexts\": [{\n      \"name\": \"projects/whistler-blackcomb-908ed/agent/sessions/ABwppHGUEKfLSqb-Em-jakmyTYPEgoYIS1PU1GPPQAGt06G4MUxDuBNn-haja6DdQ4MvpvwUjvy_qyhHS5rdK1XS5F2yhtRw/contexts/google_assistant_welcome\"\n    }, {\n      \"name\": \"projects/whistler-blackcomb-908ed/agent/sessions/ABwppHGUEKfLSqb-Em-jakmyTYPEgoYIS1PU1GPPQAGt06G4MUxDuBNn-haja6DdQ4MvpvwUjvy_qyhHS5rdK1XS5F2yhtRw/contexts/actions_capability_screen_output\"\n    }, {\n      \"name\": \"projects/whistler-blackcomb-908ed/agent/sessions/ABwppHGUEKfLSqb-Em-jakmyTYPEgoYIS1PU1GPPQAGt06G4MUxDuBNn-haja6DdQ4MvpvwUjvy_qyhHS5rdK1XS5F2yhtRw/contexts/actions_capability_audio_output\"\n    }, {\n      \"name\": \"projects/whistler-blackcomb-908ed/agent/sessions/ABwppHGUEKfLSqb-Em-jakmyTYPEgoYIS1PU1GPPQAGt06G4MUxDuBNn-haja6DdQ4MvpvwUjvy_qyhHS5rdK1XS5F2yhtRw/contexts/google_assistant_input_type_keyboard\"\n    }, {\n      \"name\": \"projects/whistler-blackcomb-908ed/agent/sessions/ABwppHGUEKfLSqb-Em-jakmyTYPEgoYIS1PU1GPPQAGt06G4MUxDuBNn-haja6DdQ4MvpvwUjvy_qyhHS5rdK1XS5F2yhtRw/contexts/actions_capability_media_response_audio\"\n    }, {\n      \"name\": \"projects/whistler-blackcomb-908ed/agent/sessions/ABwppHGUEKfLSqb-Em-jakmyTYPEgoYIS1PU1GPPQAGt06G4MUxDuBNn-haja6DdQ4MvpvwUjvy_qyhHS5rdK1XS5F2yhtRw/contexts/actions_capability_web_browser\"\n    }],\n    \"intent\": {\n      \"name\": \"projects/whistler-blackcomb-908ed/agent/intents/b96291d1-9c93-4699-a7e4-bb38134da220\",\n      \"displayName\": \"Default Welcome Intent\"\n    },\n    \"intentDetectionConfidence\": 1.0,\n    \"languageCode\": \"en-us\"\n  },\n  \"originalDetectIntentRequest\": {\n    \"source\": \"google\",\n    \"version\": \"2\",\n    \"payload\": {\n      \"isInSandbox\": true,\n      \"surface\": {\n        \"capabilities\": [{\n          \"name\": \"actions.capability.WEB_BROWSER\"\n        }, {\n          \"name\": \"actions.capability.MEDIA_RESPONSE_AUDIO\"\n        }, {\n          \"name\": \"actions.capability.SCREEN_OUTPUT\"\n        }, {\n          \"name\": \"actions.capability.AUDIO_OUTPUT\"\n        }]\n      },\n      \"requestType\": \"SIMULATOR\",\n      \"inputs\": [{\n        \"rawInputs\": [{\n          \"query\": \"Talk to Whistler Status\",\n          \"inputType\": \"KEYBOARD\"\n        }],\n        \"intent\": \"actions.intent.MAIN\"\n      }],\n      \"user\": {\n        \"lastSeen\": \"2018-12-29T22:57:05Z\",\n        \"locale\": \"en-US\",\n        \"userId\": \"ABwppHGKZe_sxq25BB-UesIt1AMqK8eAbMWXMUvrFm5HdjKHVKx1rr9HAjuF7fOvHSBhQEXoZq4TgT9k5tvndZKTBMos7Ra9\"\n      },\n      \"conversation\": {\n        \"conversationId\": \"ABwppHGUEKfLSqb-Em-jakmyTYPEgoYIS1PU1GPPQAGt06G4MUxDuBNn-haja6DdQ4MvpvwUjvy_qyhHS5rdK1XS5F2yhtRw\",\n        \"type\": \"NEW\"\n      }\n    }\n  },\n  \"session\": \"projects/whistler-blackcomb-908ed/agent/sessions/ABwppHGUEKfLSqb-Em-jakmyTYPEgoYIS1PU1GPPQAGt06G4MUxDuBNn-haja6DdQ4MvpvwUjvy_qyhHS5rdK1XS5F2yhtRw\"\n}"
+        },
+        "delegatedResponse": {
+            "delegatedResponse": "{\"fulfillmentText\":\"Welcome to my agent!\",\"outputContexts\":[]}"
+        }
+    }
+}.
+"  
+timestamp: "2018-12-29T23:01:25.223144305Z"
+trace: "projects/743050272655/traces/ABwppHGUEKfLSqb-Em-jakmyTYPEgoYIS1PU1GPPQAGt06G4MUxDuBNn-haja6DdQ4MvpvwUjvy_qyhHS5rdK1XS5F2yhtRw"
+}
