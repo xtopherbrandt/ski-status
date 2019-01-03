@@ -76,7 +76,7 @@ function fallback(agent) {
     agent.add(`I'm sorry, can you try again?`);
 }
 
-module.exports = async function (azureContext, req) {
+module.exports = function (azureContext, req) {
     azureContext.log('ski-status webhook fired');
     azureContext.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
     azureContext.log('Dialogflow Request body: ' + JSON.stringify(req.body));
@@ -87,7 +87,7 @@ module.exports = async function (azureContext, req) {
     // Register handlers for Dialogflow intents
 
     app.intent('Default Welcome Intent', conv => {
-        conv.ask('Hi! Ski Status is Ready for you.')
+        conv.ask('Hi! Ski Status is Ready for you.');
 
         /**
         conv.ask(`Here's a picture of a cat`)
@@ -112,6 +112,10 @@ module.exports = async function (azureContext, req) {
     })
 
     
-    return app( req.body, req.headers );
+    app( req.body, req.headers ).then( response => {
+        azureContext.log( `Response: ${response}` );
+        azureContext.res = response;
+        azureContext.done();
+    });
 
 };
