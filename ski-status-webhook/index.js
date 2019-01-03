@@ -97,49 +97,63 @@ module.exports = function (azureContext, req) {
         alt: 'A cat',
         }))
         */
-    })
+    });
     
     // Intent in Dialogflow called `Goodbye`
     app.intent('Goodbye', conv => {
-        conv.close('See you later!')
-    })
+        conv.close('See you later!');
+    });
     
     app.intent('Default Fallback Intent', conv => {
-        conv.ask(`I didn't understand. Can you tell me something else?`)
-    })
+        conv.ask(`I didn't understand. Can you tell me something else?`);
+    });
     
     app.intent('is this run groomed', conv => {
         return checkGrooming(conv);
-    })
+    });
+
+    app.intent('actions.intent.MAIN', conv => {
+        conv.ask('Hi, how is it going?');
+    });
 
     app( req.body, req.headers ).then( response => {
-        azureContext.log( `Response: ${response}` );
+        azureContext.log( `Response: ${response.body}` );
         azureContext.res = {
             body: response.body,
             headers: {'Content-Type':'application/json', 'transfer-encoding' : 'application/gzip'},
             status: 200
-        }
+        };
         
         azureContext.done();
-    });
-/**
-    var responseBody = {
-        "payload": {
-          "google": {
-            "expectUserResponse": true,
-            "richResponse": {
-              "items": [
-                {
-                  "simpleResponse": {
-                    "textToSpeech": "this is a simple response"
+        azureContext.log( 'done' );
+    },
+        error => {
+            azureContext.log( `Error: ${error} ` );
+            var responseBody = {
+                "payload": {
+                  "google": {
+                    "expectUserResponse": true,
+                    "richResponse": {
+                      "items": [
+                        {
+                          "simpleResponse": {
+                            "textToSpeech": "an unexpected error occured."
+                          }
+                        }
+                      ]
+                    }
                   }
                 }
-              ]
-            }
-          }
-        }
-      };
+              };
 
-    completeCall( azureContext, responseBody );
-*/
+            azureContext.res = {
+                body: responseBody,
+                headers: {'Content-Type':'application/json', 'transfer-encoding' : 'application/gzip'},
+                status: 200
+            };
+
+            azureContext.done();
+            azureContext.log( 'done' );
+    });
+
 };
