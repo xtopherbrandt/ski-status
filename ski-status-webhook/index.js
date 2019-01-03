@@ -87,7 +87,7 @@ module.exports = async function (azureContext, req) {
     // Register handlers for Dialogflow intents
 
     app.intent('Default Welcome Intent', conv => {
-        conv.ask('Hi, how is it going?')
+        conv.ask('Hi! Ski Status is Ready for you.')
 
         /**
         conv.ask(`Here's a picture of a cat`)
